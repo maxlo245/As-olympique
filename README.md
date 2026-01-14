@@ -140,10 +140,6 @@ as_olympique/
 - [PHP Security Manual](https://www.php.net/manual/en/security.php)
 - [CWE - Common Weakness Enumeration](https://cwe.mitre.org/)
 
-## Auteur
-
-**Florence PEYRATAUD** - BTS SIO SLAM - Bloc 3 Cybersécurité
-
 ---
 
 *Dernière mise à jour : Janvier 2026*
