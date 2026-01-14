@@ -91,7 +91,7 @@ $commentaires = $stmt->fetchAll();
     <p>Aucun commentaire pour le moment.</p>
 <?php else: ?>
     <?php foreach ($commentaires as $c): ?>
-        <div class="comement-box">
+        <div class="comment-box">
             <strong><?= e($c['auteur']) ?></strong>
             <small>(<?= e($c['date_creation']) ?>)</small>
             <p><?= nl2br(e($c['contenu'])) ?></p>

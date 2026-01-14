@@ -142,4 +142,155 @@ as_olympique/
 
 ---
 
+## Architecture et Optimisations (Janvier 2026)
+
+### Nouvelles Fonctionnalités
+
+Ce projet a été optimisé avec une architecture moderne tout en maintenant sa valeur éducative.
+
+#### Structure PSR-4
+
+```
+src/
+├── Core/                    # Classes principales
+│   ├── Config.php          # Gestion configuration (.env)
+│   ├── Database.php        # Singleton PDO avec retry
+│   └── Security.php        # Fonctions de sécurité
+├── assets/
+│   ├── css/style.css       # Styles externalisés
+│   └── js/main.js          # JavaScript externalisé
+├── helpers.php             # Fonctions globales
+├── init.php                # Initialisation améliorée
+├── vuln/                   # Versions vulnérables
+└── secure/                 # Versions sécurisées
+```
+
+#### Optimisations de Performance
+
+- **Base de données** :
+  - Singleton pattern avec connection pooling
+  - Retry logic automatique
+  - Indexes optimisés
+  - Stored procedures pour opérations courantes
+  - Triggers pour audit logging
+
+- **Frontend** :
+  - CSS et JS externalisés
+  - Preloading et caching
+  - Compression Gzip (.htaccess)
+
+- **PHP** :
+  - Opcode caching (OPcache)
+  - Output buffering
+  - Type hints PHP 8+
+  - PSR-12 compliant
+
+#### Sécurité Renforcée
+
+- **Headers de sécurité** :
+  - X-Content-Type-Options
+  - X-Frame-Options
+  - Content-Security-Policy
+  - Referrer-Policy
+
+- **Fonctionnalités** :
+  - CSRF tokens avec expiration
+  - Rate limiting pour connexions
+  - Sessions sécurisées
+  - Validation MIME pour uploads
+  - Password hashing (bcrypt)
+
+### Installation avec Docker
+
+```bash
+# Démarrer l'environnement complet
+docker-compose up -d
+
+# Accéder à l'application
+http://localhost:8888
+
+# Accéder à phpMyAdmin
+http://localhost:8081
+```
+
+### Installation avec Composer
+
+```bash
+# Installer les dépendances
+composer install
+
+# Copier la configuration
+cp .env.example .env
+
+# Éditer .env avec vos paramètres
+nano .env
+
+# Lancer les tests
+composer test
+```
+
+### Variables d'Environnement
+
+Le projet supporte maintenant la configuration via `.env` :
+
+```env
+DB_HOST=localhost
+DB_NAME=as_olympique_db
+DB_USER=root
+DB_PASS=root
+
+APP_ENV=development
+APP_DEBUG=true
+
+RATE_LIMIT_LOGIN_ATTEMPTS=5
+CSRF_TOKEN_LIFETIME=3600
+```
+
+### Tests Unitaires
+
+Des tests PHPUnit sont fournis pour les classes principales :
+
+```bash
+# Exécuter tous les tests
+./vendor/bin/phpunit
+
+# Tests avec couverture de code
+./vendor/bin/phpunit --coverage-html coverage
+```
+
+### Documentation Additionnelle
+
+- [SECURITY.md](SECURITY.md) - Politique de sécurité
+- [CONTRIBUTING.md](CONTRIBUTING.md) - Guide de contribution
+- [INSTALL.md](INSTALL.md) - Instructions d'installation détaillées
+
+### Compatibilité
+
+- **PHP** : 7.4+ (recommandé: PHP 8.3+)
+- **MySQL** : 5.7+ ou MariaDB 10.x+
+- **Serveurs** : Apache 2.4+, Nginx 1.18+
+
+### Outils de Développement
+
+```bash
+# Vérifier le style de code
+composer cs-check
+
+# Corriger le style de code
+composer cs-fix
+
+# Exécuter les tests
+composer test
+```
+
+### Ressources Techniques
+
+- **PSR-12** : [PHP Standards Recommendations](https://www.php-fig.org/psr/psr-12/)
+- **OWASP** : [Top 10 2021](https://owasp.org/Top10/)
+- **Docker** : [Documentation officielle](https://docs.docker.com/)
+- **Composer** : [Dependency Manager](https://getcomposer.org/)
+
+---
+
 *Dernière mise à jour : Janvier 2026*
+

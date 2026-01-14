@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # Web server (Apache + PHP)
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: as_olympique_web
+    ports:
+      - "8888:80"
+    volumes:
+      - ./src:/var/www/html/src
+      - ./uploads:/var/www/html/uploads
+      - ./logs:/var/www/html/logs
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=as_olympique_db
+      - DB_USER=as_user
+      - DB_PASS=as_pwd
+      - APP_ENV=development
+      - APP_DEBUG=true
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - as_olympique_network
+
+  # MySQL database
+  db:
+    image: mysql:8.0
+    container_name: as_olympique_db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: as_olympique_db
+      MYSQL_USER: as_user
+      MYSQL_PASSWORD: as_pwd
+    volumes:
+      - ./database/as_olympique_db.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - as_olympique_network
+
+  # phpMyAdmin (optional, for database management)
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: as_olympique_phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    depends_on:
+      - db
+    networks:
+      - as_olympique_network
+
+networks:
+  as_olympique_network:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local

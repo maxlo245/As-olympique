@@ -1,0 +1,116 @@
+; PHP Configuration Recommendations for AS Olympique
+; Copy these settings to your php.ini file or use .htaccess / .user.ini
+
+; ============================================================
+; PERFORMANCE SETTINGS
+; ============================================================
+
+; Enable OPcache for better performance
+opcache.enable=1
+opcache.enable_cli=0
+opcache.memory_consumption=128
+opcache.interned_strings_buffer=8
+opcache.max_accelerated_files=10000
+opcache.revalidate_freq=2
+opcache.fast_shutdown=1
+
+; Realpath cache (improves file path resolution)
+realpath_cache_size=4096K
+realpath_cache_ttl=600
+
+; ============================================================
+; SECURITY SETTINGS
+; ============================================================
+
+; Disable dangerous functions
+disable_functions=exec,passthru,shell_exec,system,proc_open,popen,curl_exec,curl_multi_exec,parse_ini_file,show_source
+
+; Hide PHP version in headers
+expose_php=Off
+
+; Disable remote file access (unless needed)
+allow_url_fopen=Off
+allow_url_include=Off
+
+; Session security
+session.cookie_httponly=1
+session.cookie_secure=1
+session.use_strict_mode=1
+session.use_only_cookies=1
+session.cookie_samesite=Strict
+
+; Open basedir restriction (adjust path as needed)
+; open_basedir=/var/www/as_olympique:/tmp
+
+; ============================================================
+; ERROR HANDLING
+; ============================================================
+
+; Display errors (development only - disable in production)
+display_errors=Off
+display_startup_errors=Off
+
+; Log errors
+log_errors=On
+error_log=/var/log/php/error.log
+
+; Error reporting level
+error_reporting=E_ALL & ~E_DEPRECATED & ~E_STRICT
+
+; ============================================================
+; FILE UPLOAD SETTINGS
+; ============================================================
+
+; File upload limits
+file_uploads=On
+upload_max_filesize=2M
+max_file_uploads=20
+
+; Maximum POST size
+post_max_size=8M
+
+; ============================================================
+; RESOURCE LIMITS
+; ============================================================
+
+; Maximum execution time
+max_execution_time=30
+max_input_time=30
+
+; Memory limit
+memory_limit=128M
+
+; ============================================================
+; DATE & TIMEZONE
+; ============================================================
+
+; Set default timezone (adjust as needed)
+date.timezone=Europe/Paris
+
+; ============================================================
+; DATABASE
+; ============================================================
+
+; PDO MySQL
+pdo_mysql.cache_size=2000
+pdo_mysql.default_socket=/var/run/mysqld/mysqld.sock
+
+; ============================================================
+; OUTPUT BUFFERING
+; ============================================================
+
+; Enable output buffering for performance
+output_buffering=4096
+
+; ============================================================
+; MISCELLANEOUS
+; ============================================================
+
+; Default character encoding
+default_charset="UTF-8"
+
+; Ignore user abort (for long-running scripts)
+ignore_user_abort=Off
+
+; Maximum input variables (prevents hash collision attacks)
+max_input_vars=1000

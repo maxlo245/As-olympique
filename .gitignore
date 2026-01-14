@@ -1,0 +1,47 @@
+# Environment configuration
+.env
+.env.local
+.env.*.local
+
+# Composer dependencies
+/vendor/
+composer.lock
+
+# PHPUnit
+.phpunit.result.cache
+/coverage/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+/logs/
+
+# Temporary files
+/tmp/
+*.tmp
+
+# Uploaded files (keep directory structure but ignore content)
+/uploads/*
+!/uploads/README.md
+
+# Cache
+/cache/
+
+# Build artifacts
+/build/
+/dist/
+
+# OS specific
+Thumbs.db
+ehthumbs.db
+
+# PHP specific
+.phpunit.cache
+phpunit.phar
