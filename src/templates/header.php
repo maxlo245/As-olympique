@@ -362,23 +362,23 @@
         }
         
         /* Comement boxes */
-        .comement-box {
+        .comment-box {
             background: var(--gray-100);
             border: 2px solid var(--black);
             padding: 20px;
             margin: 15px 0;
         }
         
-        .comement-box strong {
+        .comment-box strong {
             color: var(--black);
         }
         
-        .comement-box small {
+        .comment-box small {
             color: var(--gray-500);
             margin-left: 10px;
         }
         
-        .comement-box p {
+        .comment-box p {
             margin-top: 10px;
             margin-bottom: 0;
         }

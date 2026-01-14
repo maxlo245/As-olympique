@@ -129,11 +129,9 @@ class Database
                     // Set connection timeout
                     PDO::ATTR_TIMEOUT => 5,
                     
-                    // Use buffered queries for better performance with large result sets
-                    PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
-                    
-                    // Enable MySQL native prepared statements
-                    PDO::ATTR_EMULATE_PREPARES => false,
+                    // Use unbuffered queries for better memory management
+                    // This is important in educational environments with varying query sizes
+                    PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false,
                 ];
 
                 $this->connection = new PDO(
