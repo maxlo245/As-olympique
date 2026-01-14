@@ -157,7 +157,7 @@ class Validator
             return false;
         }
 
-        if ($requireHttps && !str_starts_with($url, 'https://')) {
+        if ($requireHttps && strpos($url, 'https://') !== 0) {
             return false;
         }
 

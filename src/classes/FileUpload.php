@@ -199,7 +199,7 @@ class FileUpload
         }
 
         foreach ($signatures[$extension] as $signature) {
-            if (str_starts_with($bytes, $signature)) {
+            if (strpos($bytes, $signature) === 0) {
                 return true;
             }
         }

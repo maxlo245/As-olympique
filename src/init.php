@@ -12,29 +12,17 @@
 $config = require __DIR__ . '/config.php';
 
 // Start session with secure parameters
-// Compatible with PHP 7.3+ and earlier versions
+// PHP 7.4+ compatible (requires session_set_cookie_params array syntax from PHP 7.3+)
 $secure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
 
-if (PHP_VERSION_ID >= 70300) {
-    // PHP 7.3+ syntax
-    session_set_cookie_params([
-        'lifetime' => $config->session->lifetime,
-        'path' => '/',
-        'domain' => '',
-        'secure' => $secure,
-        'httponly' => $config->session->httponly,
-        'samesite' => 'Strict',
-    ]);
-} else {
-    // PHP < 7.3 fallback
-    session_set_cookie_params(
-        $config->session->lifetime,
-        '/',
-        '',
-        $secure,
-        $config->session->httponly
-    );
-}
+session_set_cookie_params([
+    'lifetime' => $config->session->lifetime,
+    'path' => '/',
+    'domain' => '',
+    'secure' => $secure,
+    'httponly' => $config->session->httponly,
+    'samesite' => 'Strict',
+]);
 
 // Set custom session name for security
 session_name('AS_OLYMPIQUE_SESSION');
