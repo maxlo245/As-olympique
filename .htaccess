@@ -1,0 +1,170 @@
+# Apache Configuration for AS Olympique
+# Place this file in the /src directory or configure in Apache VirtualHost
+
+# ============================================================
+# SECURITY HEADERS
+# ============================================================
+
+# Prevent MIME type sniffing
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>
+
+# Enable XSS Protection (for older browsers)
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Prevent clickjacking
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# Content Security Policy
+# Note: Adjust this based on your specific needs
+<IfModule mod_headers.c>
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'"
+</IfModule>
+
+# Referrer Policy
+<IfModule mod_headers.c>
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Permissions Policy
+<IfModule mod_headers.c>
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ============================================================
+# PERFORMANCE & CACHING
+# ============================================================
+
+# Enable Gzip Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType DEFLATE application/javascript application/json application/xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Browser Caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS and JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    
+    # Fonts
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    
+    # Default
+    ExpiresDefault "access plus 1 week"
+</IfModule>
+
+# Cache Control Headers
+<IfModule mod_headers.c>
+    # For static resources
+    <FilesMatch "\.(ico|jpg|jpeg|png|gif|svg|js|css|woff|woff2|ttf|eot)$">
+        Header set Cache-Control "public, max-age=31536000"
+    </FilesMatch>
+    
+    # For PHP files (no cache)
+    <FilesMatch "\.(php)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+
+# ============================================================
+# FILE ACCESS RESTRICTIONS
+# ============================================================
+
+# Deny access to sensitive files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protect configuration files
+<FilesMatch "(^config\.php|\.env|composer\.(json|lock)|package\.json)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protect log files
+<FilesMatch "\.log$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ============================================================
+# PHP SETTINGS
+# ============================================================
+
+# Disable directory browsing
+Options -Indexes
+
+# Follow symbolic links
+Options +FollowSymLinks
+
+# Enable rewrite engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Force HTTPS (uncomment in production)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Remove trailing slashes
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+</IfModule>
+
+# Limit file upload size (adjust as needed)
+<IfModule mod_php.c>
+    php_value upload_max_filesize 2M
+    php_value post_max_size 2M
+    php_value max_execution_time 30
+    php_value max_input_time 30
+    php_flag display_errors Off
+    php_flag log_errors On
+</IfModule>
+
+# ============================================================
+# ERROR PAGES
+# ============================================================
+
+# Custom error pages (create these files as needed)
+# ErrorDocument 403 /error/403.php
+# ErrorDocument 404 /error/404.php
+# ErrorDocument 500 /error/500.php
+
+# ============================================================
+# UPLOAD DIRECTORY PROTECTION
+# ============================================================
+
+# Prevent execution of PHP files in upload directory
+<Directory "../uploads">
+    <FilesMatch "\.php$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    
+    # Allow only specific file types
+    <FilesMatch "\.(jpg|jpeg|png|gif|pdf|doc|docx|xls|xlsx)$">
+        Order allow,deny
+        Allow from all
+    </FilesMatch>
+</Directory>
