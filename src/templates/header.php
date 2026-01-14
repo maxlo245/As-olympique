@@ -1,9 +1,17 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AS Olympique Saint-Remy - TD Cybersecurite</title>
+    
+    <!-- Performance: Preload critical CSS -->
+    <link rel="preload" href="<?= defined('BASE_URL') ? BASE_URL : '' ?>/assets/css/style.css" as="style">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="<?= defined('BASE_URL') ? BASE_URL : '' ?>/assets/css/style.css">
+    
+    <!-- Optional inline critical CSS for faster rendering -->
     <style>
         /* Reset et base */
         *, *::before, *::after { 
@@ -440,32 +448,6 @@
     <i class="theme-icon" id="themeIcon">&#9790;</i>
 </button>
 
-<script>
-(function() {
-    const toggle = document.getElementById('themeToggle');
-    const icon = document.getElementById('themeIcon');
-    const stored = localStorage.getItem('theme');
-    
-    if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        icon.innerHTML = '&#9728;';
-    }
-    
-    toggle.addEventListener('click', function() {
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        if (isDark) {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('theme', 'light');
-            icon.innerHTML = '&#9790;';
-        } else {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-            icon.innerHTML = '&#9728;';
-        }
-    });
-})();
-</script>
-
 <div class="container">
     <header class="header">
         <h1>AS Olympique Saint-Remy</h1>
@@ -495,46 +477,7 @@
         </a>
     </nav>
     
-    <style>
-        .status-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 6px;
-            background: #666;
-            animation: pulse 1.5s infinite;
-        }
-        .status-dot.online { background: #22c55e; animation: none; }
-        .status-dot.offline { background: #ef4444; animation: none; }
-        @keyframes pulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
-        }
-    </style>
-    
-    <script>
-    (function checkPMA() {
-        const dot = document.getElementById('pma-status');
-        const link = document.getElementById('phpmyadmin-link');
-        
-        fetch('/check_pma.php?' + Date.now())
-            .then(r => r.json())
-            .then(data => {
-                if (data.status === 'online') {
-                    dot.className = 'status-dot online';
-                    link.title = 'phpMyAdmin est accessible';
-                } else {
-                    dot.className = 'status-dot offline';
-                    link.title = 'phpMyAdmin non accessible';
-                }
-            })
-            .catch(() => {
-                dot.className = 'status-dot offline';
-            });
-        
-        setTimeout(checkPMA, 5000);
-    })();
-    </script>
+    <!-- External JavaScript -->
+    <script src="<?= defined('BASE_URL') ? BASE_URL : '' ?>/assets/js/main.js" defer></script>
     
     <main class="content-box">
