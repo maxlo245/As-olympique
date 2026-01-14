@@ -59,7 +59,11 @@ CREATE TABLE IF NOT EXISTS inscriptions (
     statut ENUM('en_attente', 'validee', 'annulee') DEFAULT 'en_attente',
     FOREIGN KEY (membre_id) REFERENCES membres(id) ON DELETE CASCADE,
     FOREIGN KEY (activite_id) REFERENCES activites(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_inscription (membre_id, activite_id)
+    UNIQUE KEY unique_inscription (membre_id, activite_id),
+    -- Performance: Composite indexes for common queries
+    INDEX idx_membre_statut (membre_id, statut),
+    INDEX idx_activite_statut (activite_id, statut),
+    INDEX idx_date_inscription (date_inscription)
 ) ENGINE=InnoDB;
 
 -- ============================================================
@@ -73,7 +77,10 @@ CREATE TABLE IF NOT EXISTS commentaires (
     membre_id INT,
     modere TINYINT(1) DEFAULT 0,
     FOREIGN KEY (membre_id) REFERENCES membres(id) ON DELETE SET NULL,
-    INDEX idx_date (date_creation)
+    -- Performance: Indexes for common queries
+    INDEX idx_date (date_creation),
+    INDEX idx_membre_modere (membre_id, modere),
+    INDEX idx_modere_date (modere, date_creation)
 ) ENGINE=InnoDB;
 
 -- ============================================================
@@ -88,7 +95,10 @@ CREATE TABLE IF NOT EXISTS fichiers (
     membre_id INT,
     date_upload DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (membre_id) REFERENCES membres(id) ON DELETE SET NULL,
-    INDEX idx_nom_serveur (nom_serveur)
+    -- Performance: Indexes for common queries
+    INDEX idx_nom_serveur (nom_serveur),
+    INDEX idx_membre_date (membre_id, date_upload),
+    INDEX idx_date_upload (date_upload)
 ) ENGINE=InnoDB;
 
 -- ============================================================

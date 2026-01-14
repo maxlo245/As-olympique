@@ -1,0 +1,55 @@
+# Environment variables
+.env
+
+# Composer
+/vendor/
+composer.lock
+
+# Logs
+/logs/*.log
+/logs/*.txt
+!/logs/.gitkeep
+
+# Uploads (keep directory but not content)
+/uploads/*
+!/uploads/.gitkeep
+!/uploads/README.md
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# PHP Cache
+.php_cs.cache
+.phpunit.result.cache
+
+# Temporary files
+/tmp/*
+!/tmp/.gitkeep
+
+# Build artifacts
+*.zip
+*.tar.gz
+
+# OS specific
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# PHPStorm
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Backup files
+*.bak
+*.backup
+*~
