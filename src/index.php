@@ -1,4 +1,10 @@
 <?php 
+/**
+ * Page d'accueil du TP AS Olympique.
+ * - Initialise l'environnement applicatif.
+ * - Charge les fonctions communes.
+ * - Affiche le menu vers les différents scénarios vulnérables.
+ */
 require __DIR__ . '/init.php'; 
 require __DIR__ . '/functions.php'; 
 include __DIR__ . '/templates/header.php';

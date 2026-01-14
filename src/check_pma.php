@@ -1,4 +1,8 @@
 <?php
+/**
+ * Point d'entrée JSON pour vérifier l'état de phpMyAdmin local.
+ * Utilisé dans le header pour afficher un indicateur online/offline.
+ */
 header('Content-Type: application/json');
 header('Cache-Control: no-cache');
 
